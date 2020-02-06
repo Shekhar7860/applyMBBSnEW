@@ -123,7 +123,8 @@ export default class Login extends Component {
       }
 }))
    .catch((error) => {
-   console.log('error', error)
+    this.setState({visible:false})
+    Alert.alert("NetWork Error")
    });
            }
            else {

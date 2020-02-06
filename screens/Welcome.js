@@ -5,7 +5,7 @@ import firebase from 'react-native-firebase';
 const Banner = firebase.admob.Banner;
 const AdRequest = firebase.admob.AdRequest;
 import Service from './Service';
-import { LoginManager,   AccessToken } from 'react-native-fbsdk';
+// import { LoginManager,   AccessToken } from 'react-native-fbsdk';
 const advert2 = firebase.admob().rewarded('ca-app-pub-3550043356338169/5722030580')
 const advert = firebase.admob().interstitial('ca-app-pub-3550043356338169/2336678711')
 const request = new AdRequest();

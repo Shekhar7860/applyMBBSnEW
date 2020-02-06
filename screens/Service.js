@@ -125,15 +125,21 @@ formdata.append("password", password)
 
 }
 
-calculator = (token, stname, parentname, email, phone, score,  sub, sub2, sub3, sub4, sub5,bio, phy, che, value, picker1, picker2) => 
+calculator = (token, stname, parentname, email, phone, score,  sub,sub1,  sub2, sub3, sub4,bio, phy, che, value, picker1, picker2) => 
 {
-
+var cat = "GEN"
+if (value =1){
+  cat ="UR"
+}
+else {
+  cat="OBC/SC/ST"
+}
 
 
 // formdata.append("product[description]", '12dsadadsa')
-var data = { "title": "Pramod Kumar", "status": "publish" ,"post_type": "candidates", "student_name": "Pramod Kumar" ,"parents_name": "P P Keshri","student_email": "keshripramod@gmail.com","phone_number": "9356704158" ,"student_category": "Genral","neet_score": 523,"year_pass_10": 1995 ,"year_pass_12": 1998,"sub1_marks": 77,"sub2_marks": 66 ,"sub3_marks": 98,"sub4_marks": 77,"sub5_marks": 66 , 
-"phy_marks": 66 ,"che_marks": 98,"bio_marks": 77 }
-
+var data = { "title": "Pramod Kumar", "status": "publish" ,"post_type": "candidates", "student_name": stname ,"parents_name": parentname,"student_email": email,"phone_number": phone ,"student_category": cat,"neet_score": score,"year_pass_10": picker1 ,"year_pass_12": picker2,"sub1_marks": sub,"sub2_marks": sub1 ,"sub3_marks": sub2,"sub4_marks": sub3,"sub5_marks": sub4 , 
+"phy_marks":phy,"che_marks": che,"bio_marks": bio }
+console.log('data', data)
  
   return fetch('https://www.mbbsbangladesh.com/wp-json/wp/v2/candidates', {
   method: 'POST',

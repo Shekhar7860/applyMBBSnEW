@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {Platform, Picker, Text, View, TextInput, Image, ImageBackground, TouchableOpacity, StatusBar, ScrollView, TouchableNativeFeedback} from 'react-native';
+import {Platform, Picker, Text, View, TextInput,Alert, Image, ImageBackground, TouchableOpacity, StatusBar, ScrollView, TouchableNativeFeedback} from 'react-native';
 import styles from './styles.js';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
 import firebase from 'react-native-firebase';
 const Banner = firebase.admob.Banner;
 const AdRequest = firebase.admob.AdRequest;
 const request = new AdRequest();
+import Service from './Service';
 request.addKeyword('foobar');
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -28,7 +29,7 @@ export default class SignuUp extends Component {
       loading: false,
        stname : "Student name (required)",
        parentname : "Parent/Guardian Name (required)",
-       score : "Your Phone (required)",
+       score : "NEET Score (optional)",
        value : 1,
       
        sub2 : "Subject2",
@@ -39,7 +40,7 @@ export default class SignuUp extends Component {
       bio : "Biology",
       che : "Chemistry"
     }
-    
+    service = new Service();
   }
   componentDidMount =()=> {
      service.getUserData('tokenData').then((res) => {
@@ -58,16 +59,22 @@ export default class SignuUp extends Component {
    }
 
    submit = () => {
-    this.setState({visible:true})
+    // this.setState({visible:true})
 
-    service.calculator(this.state.token, this.state.name, this.state.email, this.state.firstName, this.state.lastName, this.state.password,  this.state.mobile).then((res) => {
-    this.setState({visible:false})
-
+    service.calculator(this.state.token, this.state.stname, this.state.parentname, this.state.email, this.state.phone, this.state.score, this.state.sub,  this.state.sub2, this.state.sub3, this.state.sub4, this.state.sub5, this.state.bio, this.state.phy, this.state.che, this.state.value, this.state.picker1, this.state.picker2).then((res) => {
    console.log('res', res)
+   if(res){
+  //   setTimeout(() => {
+  //     this.setState({visible:false})
+  // }, 3000)
+   
+    Alert.alert("Your Application has been Submitted Successfly!You will be notified by email and sms")
+ 
+   }
     //  Alert.alert("loggin successfully")
           // this.props.navigation.navigate('Profile')
       })
-     console.log('valuttt', this.state.email  , this.state.stname ,  this.state.phone, this.state.parentname, this.state.value)
+     console.log('valuttt', this.state.email  , this.state.stname ,  this.state.parentname, this.state.parentname, this.state.value)
     // if (this.state.email  && this.state.stname &&  this.state.phone && this.state.parentname && this.state.value )
     // {
     //     alert("calculating!please wait")
@@ -124,7 +131,7 @@ export default class SignuUp extends Component {
                 <TextInput style={styles.inputBox}
               
                 underlineColorAndroid='rgba(0,0,0,0)' 
-                placeholder="Parent/Guardian Name (required)"
+                placeholder="Parent/Guardian Name"
                 editable={false} selectTextOnFocus={false}
                 placeholderTextColor = "#002f6c"
                 selectionColor="#fff"
@@ -168,7 +175,7 @@ export default class SignuUp extends Component {
                 </View>
 
                 <TextInput style={styles.inputBox}
-                onChangeText={(stname) => this.setState({stname})}
+                
                 underlineColorAndroid='rgba(0,0,0,0)' 
                 placeholder="Your Phone (required)"
                 editable={false} selectTextOnFocus={false}
@@ -181,9 +188,10 @@ export default class SignuUp extends Component {
                  <TextInput style={styles.inputBox}
                 onChangeText={(phone) => this.setState({phone})}
                 underlineColorAndroid='rgba(0,0,0,0)' 
-                placeholder="Your Phone (required"
+                placeholder="Your Phone (required)"
                 placeholderTextColor = "#95A5A6"
                 selectionColor="#fff"
+                maxLength={10}
                 keyboardType="number-pad"
                 onFocus= {() => this.setState({phone : " "})}
                  value={this.state.phone}
@@ -204,7 +212,7 @@ export default class SignuUp extends Component {
                  <TextInput style={styles.inputBox}
                 onChangeText={(score) => this.setState({score})}
                 underlineColorAndroid='rgba(0,0,0,0)' 
-                placeholder="NEET SCORE (optional)"
+                placeholder=""
                 placeholderTextColor = "#95A5A6"
                 selectionColor="#fff"
                 keyboardType="number-pad"
@@ -337,7 +345,7 @@ export default class SignuUp extends Component {
                 />
                 </View>
 <TextInput style={styles.inputBox}
-                onChangeText={(cat) => this.setState({cat})}
+             
                 underlineColorAndroid='rgba(0,0,0,0)' 
                 placeholder="Category (required)"
                 placeholderTextColor = "#002f6c"
@@ -348,15 +356,16 @@ export default class SignuUp extends Component {
                  value={this.state.cat}
                 />
                   <RadioForm
-                  style={{marginTop:10, justifyContent:'space-around'}}
+                  style={{fontSize:15, marginTop:10, margin:5, justifyContent:'space-around', width:'50%'}}
           radio_props={radio_props}
+          labelStyle={{fontSize:12, marginLeft:-5}}
           initial={0}
            formHorizontal={true}
           onPress={(value) => {this.setState({value:value})}}
         />
 
 <TextInput style={styles.inputBox}
-                onChangeText={(ptname) => this.setState({ptname})}
+              
                 underlineColorAndroid='rgba(0,0,0,0)' 
                 placeholder="Year Of Passing Class 10/SSC/X/O Level (required)"
                 placeholderTextColor = "#002f6c"
